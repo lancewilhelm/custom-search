@@ -1,0 +1,69 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1); /* Black overlay with 10% opacity */
+    z-index: 1; /* Ensure it's above the background but below the content */
+}
+
+#search-box {
+    z-index: 2; /* Ensure the search box is above the overlay */
+    position: relative;
+    padding: 20px;
+    border: 3px solid white;
+    border-radius: 25px;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+#search-input {
+    border: none;
+    background: transparent;
+    outline: none;
+    color: black;
+    font-size: 16px;
+    width: 250px;
+    margin-right: 10px;
+}
+
+#search-btn {
+    border: none;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+#search-btn:hover {
+    background-color: #f0f0f0;
+}
+
+#search-engine {
+    border: none;
+    background-color: white;
+    margin-right: 10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#search-engine:focus {
+    outline: none;
+}

@@ -1,0 +1,16 @@
+{
+    "manifest_version": 2,
+    "name": "Custom Search",
+    "version": "1.0",
+    "description": "A custom search bar on every new tab.",
+    "permissions": [
+      "activeTab"
+    ],
+    "chrome_url_overrides": {
+      "newtab": "newtab.html"
+    },
+    "icons": {
+      "48": "icon.png"
+    }
+  }
+  
