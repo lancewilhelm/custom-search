@@ -1,29 +1,49 @@
 // Function to perform the search
 function performSearch() {
-    console.log('Performing search');
     var query = document.getElementById('search-input').value;
     var searchEngine = document.getElementById('selected-engine').getAttribute('data-value');
     var searchURL = '';
 
-    switch (searchEngine) {
-        case 'google':
-            searchURL = 'https://www.google.com/search?q=' + query;
-            break;
-        case 'bing':
-            searchURL = 'https://www.bing.com/search?q=' + query;
-            break;
-        case 'duckduckgo':
-            searchURL = 'https://www.duckduckgo.com/?q=' + query;
-            break;
-        case 'perplexity':
-            searchURL = 'https://www.perplexity.ai/search?q=' + query;
-            break;
-        default:
-            searchURL = 'https://www.google.com/search?q=' + query;
-            break;
-    }
+    if (isValidUrl(query)) {
+        // If the input is a valid URL, open it directly
+        window.location.href = 'https://' + query;
+    } else {
+        switch (searchEngine) {
+            case 'google':
+                searchURL = 'https://www.google.com/search?q=' + query;
+                break;
+            case 'bing':
+                searchURL = 'https://www.bing.com/search?q=' + query;
+                break;
+            case 'duckduckgo':
+                searchURL = 'https://www.duckduckgo.com/?q=' + query;
+                break;
+            case 'perplexity':
+                searchURL = 'https://www.perplexity.ai/search?q=' + query;
+                break;
+            default:
+                searchURL = 'https://www.google.com/search?q=' + query;
+                break;
+        }
 
-    window.location.href = searchURL;
+        window.location.href = searchURL;
+    }
+}
+
+// Utility function to check if the input is a valid URL
+function isValidUrl(string) {
+    try {
+        new URL(string);
+        return true;
+    } catch (_) {
+        // If input is not a complete URL, try prepending "http://" to see if it forms a valid URL
+        try {
+            new URL("https://" + string);
+            return true;
+        } catch (_) {
+            return false;
+        }
+    }
 }
 
 // Function to handle option click
@@ -38,7 +58,7 @@ function handleOptionClick() {
 
 // Handle the page load
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     // Get the default search engine from storage
     browser.storage.local.get('defaultSearchEngine', function (data) {
         if (data.defaultSearchEngine) {
@@ -90,5 +110,5 @@ document.addEventListener('DOMContentLoaded', function () {
     document.body.style.backgroundImage = "url('https://source.unsplash.com/random/2160x1440?mountains')";
     document.body.style.backgroundSize = "cover";
     document.body.style.backgroundPosition = "center";
-    
+
 });
