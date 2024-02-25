@@ -4,7 +4,9 @@
     "version": "1.0",
     "description": "A custom search bar on every new tab.",
     "permissions": [
-      "activeTab"
+      "activeTab",
+      "storage",
+      "cookies"
     ],
     "chrome_url_overrides": {
       "newtab": "newtab.html"

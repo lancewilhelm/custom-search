@@ -1,9 +1,12 @@
 body, html {
     height: 100%;
     margin: 0;
+    font-family: Inter;
+    font-size: 16px;
 }
 
 body {
+    background-color: #333; /* Dark grey color */
     background-size: cover;
     background-position: center;
     display: flex;
@@ -27,10 +30,10 @@ body {
     position: relative;
     padding: 20px;
     border: 3px solid white;
-    border-radius: 25px;
+    border-radius: 15px;
     display: flex;
     justify-content: space-between;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.6);
 }
 
 #search-input {
@@ -39,14 +42,14 @@ body {
     outline: none;
     color: black;
     font-size: 16px;
-    width: 250px;
+    width: 500px;
     margin-right: 10px;
 }
 
 #search-btn {
     border: none;
     background-color: white;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 5px 15px;
     cursor: pointer;
 }
@@ -55,15 +58,66 @@ body {
     background-color: #f0f0f0;
 }
 
-#search-engine {
+.custom-select {
+    align-items: center;
     border: none;
-    background-color: white;
     margin-right: 10px;
     padding: 5px 10px;
-    border-radius: 10px;
-    cursor: pointer;
+    z-index: 2;
+    position: relative;
+    user-select: none;
+    font-size: 14px;
 }
 
-#search-engine:focus {
-    outline: none;
+.selected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.8);
+    width: 200px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+.selected:hover {
+    background-color: #f0f0f0;
+}
+
+.selected img {
+    vertical-align: middle;
+    margin-right: 8px;
+    height: 24px;
+    width: 24px;
+}
+
+.options-container {
+    position: absolute;
+    top: 100%;
+    left: 10px;
+    right: 10px;
+    z-index: 999;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: none;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.option:hover {
+    background-color: #f0f0f0;
+}
+
+.option img {
+    vertical-align: middle;
+    margin-right: 8px;
+    height: 24px;
+    width: 24px;
 }
