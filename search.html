@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>New Tab</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-<body>
-    <div class="custom-select" id="search-engine-dropdown">
-        <div class="selected" id="selected-engine"></div>
-        <div class="options-container"></div>
-    </div>
-    
-    <div id="search-box">
-        <input type="text" id="search-input" placeholder="Search or URL...">
-        <button id="search-btn">Search</button>
-    </div>    
-    <div id="overlay"></div>
-    <script src="search.js"></script>
-</body>
+
+    <head>
+        <title>New Tab</title>
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+    </head>
+
+    <body>
+        <div class="search-area">
+            <div class="custom-select" id="search-engine-dropdown">
+                <div class="selected" id="selected-engine"></div>
+                <div class="options-container"></div>
+            </div>
+            <div id="search-box">
+                <input type="text" id="search-input" placeholder="Search or URL...">
+                <button id="search-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <div id="overlay"></div>
+        <script src="search.js"></script>
+    </body>
+
 </html>

@@ -148,7 +148,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle the search engine dropdown
     document.getElementById('selected-engine').addEventListener('click', function () {
-        document.querySelector('.options-container').style.display = 'block';
+        if (document.querySelector('.options-container').style.display === 'block') {
+            document.querySelector('.options-container').style.display = 'none';
+        } else {
+            document.querySelector('.options-container').style.display = 'block';
+        }
     });
 
     // Close the dropdown if the user clicks outside of it
