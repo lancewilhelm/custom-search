@@ -6,7 +6,8 @@
     "permissions": [
       "activeTab",
       "storage",
-      "cookies"
+      "cookies",
+      "history"
     ],
     "chrome_url_overrides": {
       "newtab": "newtab.html"
