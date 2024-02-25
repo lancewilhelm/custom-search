@@ -1,6 +1,7 @@
 // Search Engine list
 let searchEngines = [];
 let currentSelectionIndex = 0;
+let lastTime = '';
 
 // Function to perform the search
 function performSearch() {
@@ -125,8 +126,23 @@ function getDefaultSearchEngine() {
     });
 }
 
+function updateClock() {
+    const now = new Date();
+    let hours = now.getHours().toString().padStart(2, '0');
+    let minutes = now.getMinutes().toString().padStart(2, '0');
+    let time = `${hours}:${minutes}`;
+    if (time !== lastTime) {
+        lastTime = time;
+        document.getElementById('clock').textContent = time;
+    }
+}
+
 // Handle the page load
 document.addEventListener('DOMContentLoaded', function () {
+    // Update the clock every minute
+    updateClock();
+    setInterval(updateClock, 1000);
+
     // Load the search engines from the JSON file
     loadSearchEngines();
 
