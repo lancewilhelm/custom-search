@@ -1,0 +1,51 @@
+[
+    {
+        "value": "google",
+        "name": "Google",
+        "searchUrl": "https://www.google.com/search?q=",
+        "favicon": "https://www.google.com/favicon.ico"
+    },
+    {
+        "value": "bing",
+        "name": "Bing",
+        "searchUrl": "https://www.bing.com/search?q=",
+        "favicon": "https://www.bing.com/favicon.ico"
+    },
+    {
+        "value": "duckduckgo",
+        "name": "DuckDuckGo",
+        "searchUrl": "https://www.duckduckgo.com/?q=",
+        "favicon": "https://www.duckduckgo.com/favicon.ico"
+    },
+    {
+        "value": "perplexity",
+        "name": "Perplexity",
+        "searchUrl": "https://www.perplexity.ai/search?q=",
+        "favicon": "https://www.perplexity.ai/favicon.ico"
+    },
+    {
+        "value": "consensus",
+        "name": "Consensus",
+        "searchUrl": "https://www.consensus.app/results/?q=",
+        "searchUrlSuffix": "&synthesize=on",
+        "favicon": "https://www.consensus.app/favicon.png"
+    },
+    {
+        "value": "googlescholar",
+        "name": "Google Scholar",
+        "searchUrl": "http://scholar.google.ch/scholar?hl=en&q=",
+        "favicon": "http://scholar.google.ch/favicon.ico"
+    },
+    {
+        "value": "youtube",
+        "name": "YouTube",
+        "searchUrl": "https://www.youtube.com/results?search_query=",
+        "favicon": "https://www.youtube.com/favicon.ico"
+    },
+    {
+        "value": "acm",
+        "name": "ACM Digital Library",
+        "searchUrl": "https://dl.acm.org/action/doSearch?AllField=",
+        "favicon": "https://dl.acm.org/favicon.ico"
+    }
+]

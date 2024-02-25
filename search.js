@@ -1,18 +1,12 @@
 // Search Engine list
-let searchEngines = [
-    { value: 'google', name: 'Google', searchUrl: 'https://www.google.com/search?q=', favicon: 'https://www.google.com/favicon.ico' },
-    { value: 'bing', name: 'Bing', searchUrl: 'https://www.bing.com/search?q=', favicon: 'https://www.bing.com/favicon.ico' },
-    { value: 'duckduckgo', name: 'DuckDuckGo', searchUrl: 'https://www.duckduckgo.com/?q=', favicon: 'https://www.duckduckgo.com/favicon.ico' },
-    { value: 'perplexity', name: 'Perplexity', searchUrl: 'https://www.perplexity.ai/search?q=', favicon: 'https://www.perplexity.ai/favicon.ico' },
-    { value: 'consensus', name: 'Consensus', searchUrl: 'https://www.consensus.app/results/?q=', favicon: 'https://www.consensus.app/favicon.png' }
-];
+let searchEngines = [];
 let currentSelectionIndex = 0;
 
 // Function to perform the search
 function performSearch() {
     var query = document.getElementById('search-input').value;
-    var searchEngine = document.getElementById('selected-engine').getAttribute('data-value');
-    var searchURL = searchEngines.find(engine => engine.value === searchEngine).searchUrl;
+    let selectedEngine = searchEngines[currentSelectionIndex];
+    searchURL = selectedEngine.searchUrl;
 
     if (isValidUrl(query)) {
         // If the input is a valid URL, open it directly
@@ -20,26 +14,39 @@ function performSearch() {
     } else {
         // If the input is not a valid URL, perform a search
         searchURL += query;
+        // If the the selectedEngine has a searchUrlSuffix parameter, append it to the searchURL
+        if (selectedEngine.searchUrlSuffix) {
+            searchURL += selectedEngine.searchUrlSuffix;
+        }
         window.location.href = searchURL;
     }
 }
 
 // Utility function to check if the input is a valid URL
 function isValidUrl(string) {
+    if (!string.includes('.')) {
+        // Most URLs will contain a dot, this excludes simple words without a dot
+        return false;
+    }
+
     try {
-        new URL(string);
-        return true;
+        const url = new URL(string);
+        // Additional check to ensure the URL has a protocol
+        return ['http:', 'https:'].includes(url.protocol);
     } catch (_) {
-        // If input is not a complete URL, try prepending "http://" to see if it forms a valid URL
+        // Check if prepending "https://" makes it a valid URL
         try {
-            new URL("https://" + string);
-            return true;
+            const url = new URL("https://" + string);
+            // Further check to ensure it doesn't just accept anything with a dot
+            return url.hostname.includes('.') && url.protocol === 'https:';
         } catch (_) {
             return false;
         }
     }
 }
 
+
+// Function to handle the click event on an option
 function handleOptionClick() {
     let value = this.getAttribute('data-value'); // Assuming each option has a data-value attribute
     currentSelectionIndex = searchEngines.findIndex(engine => engine.value === value);
@@ -48,6 +55,7 @@ function handleOptionClick() {
     updateDisplayedSelection();
 }
 
+// Function to update the displayed selection based on the current selection index
 function updateDisplayedSelection() {
     // Assuming you have a function to update the UI based on the current selection
     let selectedEngine = searchEngines[currentSelectionIndex];
@@ -61,6 +69,7 @@ function updateDisplayedSelection() {
     browser.storage.local.set({ defaultSearchEngine: selectedEngine.value });
 }
 
+// Function to populate the options container with the search engines
 function populateEngineOptions() {
     // Function to populate the options container with the options from the engine list
     let optionsContainer = document.querySelector('.options-container');
@@ -79,16 +88,26 @@ function populateEngineOptions() {
         name.id = 'selected-engine-name';
         name.innerHTML = engine.name;
         option.appendChild(name);
+
+        option.addEventListener('click', handleOptionClick);
         optionsContainer.appendChild(option);
     });
 }
 
-// Handle the page load
-document.addEventListener('DOMContentLoaded', function () {
-    // Populate the options container with the search engines
-    populateEngineOptions();
+// Function to load search engines from the JSON file
+function loadSearchEngines() {
+    fetch('searchEngines.json')
+    .then(response => response.json())
+    .then(data => {
+        searchEngines = data;
+        populateEngineOptions(); // Populate the options UI
+        getDefaultSearchEngine();
+    })
+    .catch(error => console.error('Failed to load search engines:', error));
+}
 
-    // Get the default search engine from storage
+// Function to get the default search engine from storage
+function getDefaultSearchEngine() {
     browser.storage.local.get('defaultSearchEngine', function (data) {
         if (data.defaultSearchEngine) {
             // Update the current selection index
@@ -104,6 +123,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     });
+}
+
+// Handle the page load
+document.addEventListener('DOMContentLoaded', function () {
+    // Load the search engines from the JSON file
+    loadSearchEngines();
 
     // Focus on the search input field when the page loads
     var searchInput = document.getElementById('search-input');
@@ -124,11 +149,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Handle the search engine dropdown
     document.getElementById('selected-engine').addEventListener('click', function () {
         document.querySelector('.options-container').style.display = 'block';
-    });
-
-    // Add event listeners to all options
-    document.querySelectorAll('.option').forEach(option => {
-        option.addEventListener('click', handleOptionClick);
     });
 
     // Close the dropdown if the user clicks outside of it
