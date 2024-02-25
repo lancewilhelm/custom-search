@@ -58,8 +58,10 @@ function handleOptionClick() {
 
 // Function to update the displayed selection based on the current selection index
 function updateDisplayedSelection() {
+    console.log(currentSelectionIndex);
     // Assuming you have a function to update the UI based on the current selection
     let selectedEngine = searchEngines[currentSelectionIndex];
+    console.log(selectedEngine);
     // Add the favicon to the selected engine as well as the name in two separate elements
     document.getElementById('selected-engine-favicon').src = selectedEngine.favicon;
     document.getElementById('selected-engine-favicon').alt = selectedEngine.name;
@@ -98,13 +100,14 @@ function populateEngineOptions() {
 // Function to load search engines from the JSON file
 function loadSearchEngines() {
     fetch('searchEngines.json')
-    .then(response => response.json())
-    .then(data => {
-        searchEngines = data;
-        populateEngineOptions(); // Populate the options UI
-        getDefaultSearchEngine();
-    })
-    .catch(error => console.error('Failed to load search engines:', error));
+        .then(response => response.json())
+        .then(data => {
+            searchEngines = data;
+            populateEngineOptions(); // Populate the options UI
+            getDefaultSearchEngine();
+        })
+        .then(updateDisplayedSelection)
+        .catch(error => console.error('Failed to load search engines:', error));
 }
 
 // Function to get the default search engine from storage
@@ -113,15 +116,6 @@ function getDefaultSearchEngine() {
         if (data.defaultSearchEngine) {
             // Update the current selection index
             currentSelectionIndex = searchEngines.findIndex(engine => engine.value === data.defaultSearchEngine);
-
-            // Update the UI to reflect the stored selection
-            document.querySelectorAll('.option').forEach(option => {
-                if (option.getAttribute('data-value') === data.defaultSearchEngine) {
-                    let selectedText = option.innerHTML;
-                    document.getElementById('selected-engine').innerHTML = selectedText;
-                    document.getElementById('selected-engine').setAttribute('data-value', data.defaultSearchEngine);
-                }
-            });
         }
     });
 }
