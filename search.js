@@ -19,7 +19,7 @@ function performSearch() {
         if (selectedEngine.searchUrlSuffix) {
             searchURL += selectedEngine.searchUrlSuffix;
         }
-        // window.location.href = searchURL;
+        window.location.href = searchURL;
     }
 }
 
