@@ -19,7 +19,7 @@ function performSearch() {
         if (selectedEngine.searchUrlSuffix) {
             searchURL += selectedEngine.searchUrlSuffix;
         }
-        window.location.href = searchURL;
+        // window.location.href = searchURL;
     }
 }
 
@@ -53,15 +53,13 @@ function handleOptionClick() {
     currentSelectionIndex = searchEngines.findIndex(engine => engine.value === value);
     browser.storage.local.set({ defaultSearchEngine: value });
     document.querySelector('.options-container').style.display = 'none';
-    updateDisplayedSelection();
+    updateDisplayedSelection(currentSelectionIndex);
 }
 
 // Function to update the displayed selection based on the current selection index
-function updateDisplayedSelection() {
-    console.log(currentSelectionIndex);
+function updateDisplayedSelection(defaultEngineIndex) {
     // Assuming you have a function to update the UI based on the current selection
-    let selectedEngine = searchEngines[currentSelectionIndex];
-    console.log(selectedEngine);
+    let selectedEngine = searchEngines[defaultEngineIndex];
     // Add the favicon to the selected engine as well as the name in two separate elements
     document.getElementById('selected-engine-favicon').src = selectedEngine.favicon;
     document.getElementById('selected-engine-favicon').alt = selectedEngine.name;
@@ -98,27 +96,36 @@ function populateEngineOptions() {
 }
 
 // Function to load search engines from the JSON file
-function loadSearchEngines() {
-    fetch('searchEngines.json')
-        .then(response => response.json())
-        .then(data => {
-            searchEngines = data;
-            populateEngineOptions(); // Populate the options UI
-            getDefaultSearchEngine();
-        })
-        .then(updateDisplayedSelection)
-        .catch(error => console.error('Failed to load search engines:', error));
+async function initializeExtension() {
+    try {
+        const response = await fetch('searchEngines.json');
+        const data = await response.json();
+        searchEngines = data;
+        populateEngineOptions(); // Populate the options UI
+
+        // Now correctly await getting the default search engine
+        const defaultEngineIndex = await getDefaultSearchEngine();
+
+        // Assuming updateDisplayedSelection can work with just the index
+        updateDisplayedSelection(defaultEngineIndex);
+    } catch (error) {
+        console.error('Failed to load search engines:', error);
+    }
 }
 
 // Function to get the default search engine from storage
-function getDefaultSearchEngine() {
-    browser.storage.local.get('defaultSearchEngine', function (data) {
-        if (data.defaultSearchEngine) {
-            // Update the current selection index
-            currentSelectionIndex = searchEngines.findIndex(engine => engine.value === data.defaultSearchEngine);
-        }
-    });
+async function getDefaultSearchEngine() {
+    // Using the promise-based approach of browser.storage API
+    const data = await browser.storage.local.get('defaultSearchEngine');
+    if (data.defaultSearchEngine) {
+        // Update the current selection index based on storage
+        const index = searchEngines.findIndex(engine => engine.value === data.defaultSearchEngine);
+        return index >= 0 ? index : 0; // Ensure a valid index is returned or default to 0
+    } else {
+        return 0; // Default to the first engine if none is set
+    }
 }
+
 
 function updateClock() {
     const now = new Date();
@@ -138,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setInterval(updateClock, 1000);
 
     // Load the search engines from the JSON file
-    loadSearchEngines();
+    initializeExtension();
 
     // Focus on the search input field when the page loads
     var searchInput = document.getElementById('search-input');
@@ -187,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // Update the displayed selection based on the new index
-            updateDisplayedSelection();
+            updateDisplayedSelection(currentSelectionIndex);
         }
     });
 
