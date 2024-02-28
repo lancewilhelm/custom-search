@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to change the search engine with hotkeys
     document.addEventListener('keydown', function (e) {
-        if (e.ctrlKey && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
             e.preventDefault(); // Prevent default action to avoid scrolling the page
 
             // Determine the direction and update the current selection index
