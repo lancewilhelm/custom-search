@@ -24,6 +24,13 @@
         "favicon": "https://www.perplexity.ai/favicon.ico"
     },
     {
+        "value": "phind",
+        "name": "Phind",
+        "searchUrl": "https://www.phind.com/search?q=",
+        "searchUrlSuffix": "&ignoreSearchResults=false",
+        "favicon": "https://www.phind.com/favicon.ico"
+    },
+    {
         "value": "consensus",
         "name": "Consensus",
         "searchUrl": "https://www.consensus.app/results/?q=",
@@ -37,15 +44,15 @@
         "favicon": "http://scholar.google.ch/favicon.ico"
     },
     {
-        "value": "youtube",
-        "name": "YouTube",
-        "searchUrl": "https://www.youtube.com/results?search_query=",
-        "favicon": "https://www.youtube.com/favicon.ico"
-    },
-    {
         "value": "acm",
         "name": "ACM Digital Library",
         "searchUrl": "https://dl.acm.org/action/doSearch?AllField=",
         "favicon": "https://dl.acm.org/favicon.ico"
+    },
+    {
+        "value": "youtube",
+        "name": "YouTube",
+        "searchUrl": "https://www.youtube.com/results?search_query=",
+        "favicon": "https://www.youtube.com/favicon.ico"
     }
 ]
