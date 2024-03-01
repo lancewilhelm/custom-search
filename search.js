@@ -105,6 +105,7 @@ async function initializeExtension() {
 
         // Now correctly await getting the default search engine
         const defaultEngineIndex = await getDefaultSearchEngine();
+        currentSelectionIndex = defaultEngineIndex;
 
         // Assuming updateDisplayedSelection can work with just the index
         updateDisplayedSelection(defaultEngineIndex);
